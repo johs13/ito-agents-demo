@@ -9,6 +9,10 @@ jobs:
   build:
     name: Build and analyze
     runs-on: self-hosted
+    
+    defaults:
+      run:
+        shell: cmd
 
     steps:
       - name: Checkout source
@@ -37,6 +41,7 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
                  
       - name: Build and analyze
+        shell: cmd
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}

@@ -7,12 +7,12 @@ package com.example.sonarqubedemo;
 public class BugExamples {
 
     public int guaranteedNullPointer() {
-        String message = null;
+        String message = "SonarQube demo";
         return message.length();
     }
 
     public int guaranteedDivisionByZero() {
-        int divisor = 0;
+        int divisor = 4;
         return 100 / divisor;
     }
 
@@ -21,7 +21,6 @@ public class BugExamples {
     }
 
     public String ignoredReturnValue(String userName) {
-        userName.trim();
-        return userName;
+        return userName.trim();
     }
 }

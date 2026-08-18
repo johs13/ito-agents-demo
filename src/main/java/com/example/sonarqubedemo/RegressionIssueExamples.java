@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Issues added in version 2.0 to demonstrate SonarQube analysis history.
@@ -14,12 +15,13 @@ import java.util.List;
 public class RegressionIssueExamples {
 
     public boolean compareNames(String firstName, String secondName) {
-        return firstName == secondName;
+        return Objects.equals(firstName, secondName);
     }
 
     public String readFirstLine(Path file) throws IOException {
-        BufferedReader reader = Files.newBufferedReader(file);
-        return reader.readLine();
+        try (BufferedReader reader = Files.newBufferedReader(file)) {
+            return reader.readLine();
+        }
     }
 
     public void runWorkerOnWrongThread() {

@@ -37,6 +37,18 @@ $env:SONAR_TOKEN = "<발급받은 토큰>"
 sonar-scanner -Dsonar.token=$env:SONAR_TOKEN
 ```
 
+## 세 번째 분석: 수정된 이슈와 새 이슈 비교
+
+버전 `3.0`에서는 기존 null 역참조, 0 나누기, 문자열 참조 비교, 미종료
+`BufferedReader` 등을 수정했습니다. 동시에 `Version3CodeSmellExamples`와
+`Version3SecurityExamples`에 새로운 유지보수·보안 이슈를 추가했습니다.
+
+버전 `2.0` 분석이 완료된 뒤 같은 프로젝트 키로 다시 스캔하면 다음 항목을 비교할 수 있습니다.
+
+- 수정된 기존 이슈: `Resolved Issues`
+- 버전 3.0에서 추가된 이슈: `New Issues`
+- 계속 남겨둔 기존 결점: 전체 `Issues`
+
 서버 주소가 다르면 다음 옵션을 추가합니다.
 
 ```powershell

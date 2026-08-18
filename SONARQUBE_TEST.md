@@ -44,3 +44,16 @@ sonar-scanner -Dsonar.host.url=http://<서버주소>:9000 -Dsonar.token=$env:SON
 ```
 
 분석 후 SonarQube에서 프로젝트 키 `ito-agents-demo`를 조회하면 됩니다.
+
+## 두 번째 분석과 히스토리 확인
+
+현재 소스에는 버전 `2.0`에서 추가된 `RegressionIssueExamples`와
+`SecurityRegressionExamples`가 포함되어 있습니다. 프로젝트 키는 기존과 동일하므로,
+버전 `1.0`을 먼저 분석한 상태에서 다시 스캔하면 SonarQube의 Activity에서 두 번째
+분석 기록과 새로 추가된 이슈를 확인할 수 있습니다.
+
+```powershell
+New-Item -ItemType Directory -Force target/classes | Out-Null
+javac -d target/classes (Get-ChildItem -Recurse src/main/java/*.java)
+sonar-scanner -Dsonar.token=$env:SONAR_TOKEN
+```

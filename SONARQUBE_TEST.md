@@ -37,6 +37,27 @@ $env:SONAR_TOKEN = "<발급받은 토큰>"
 sonar-scanner -Dsonar.token=$env:SONAR_TOKEN
 ```
 
+## 네 번째 분석: dev 브랜치 Pull Request
+
+버전 `4.0`에서는 버전 3.0의 일부 결점을 수정하고 `Version4IssueExamples`와
+`Version4SecurityExamples`에 새로운 결점을 추가했습니다. `dev` 브랜치를 커밋하고
+Pull Request를 생성한 뒤 CI에서 분석하면 PR의 New Code 기준으로 신규 이슈를 확인할
+수 있습니다.
+
+CI가 Pull Request 정보를 자동으로 인식하지 않는 환경에서는 다음 값을 전달합니다.
+PR 분석 기능은 사용하는 SonarQube Edition에 따라 제공 여부가 다를 수 있습니다.
+
+```powershell
+sonar-scanner `
+  -Dsonar.token=$env:SONAR_TOKEN `
+  -Dsonar.pullrequest.key=<PR번호> `
+  -Dsonar.pullrequest.branch=dev `
+  -Dsonar.pullrequest.base=main
+```
+
+PR 분석은 변경 코드의 이슈 확인에 사용하고, 전체 프로젝트 Activity 히스토리는 PR을
+병합한 뒤 대상 브랜치를 다시 분석하여 기록합니다.
+
 ## 세 번째 분석: 수정된 이슈와 새 이슈 비교
 
 버전 `3.0`에서는 기존 null 역참조, 0 나누기, 문자열 참조 비교, 미종료

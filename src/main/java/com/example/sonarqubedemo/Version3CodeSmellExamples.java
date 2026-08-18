@@ -1,27 +1,31 @@
 package com.example.sonarqubedemo;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * New maintainability issues introduced in version 3.0 for history testing.
  */
 public class Version3CodeSmellExamples {
 
+    private static final Logger LOGGER =
+            Logger.getLogger(Version3CodeSmellExamples.class.getName());
+
     public String deadAssignment() {
-        String status = "CREATED";
-        status = "READY";
+        String status = "READY";
         return status;
     }
 
     public boolean repeatedExpression(boolean active) {
-        return active && active;
+        return active;
     }
 
     public List<String> returnNullInsteadOfEmptyList(boolean hasData) {
         if (hasData) {
             return List.of("data");
         }
-        return null;
+        return List.of();
     }
 
     public String nestedTernary(int score) {
@@ -32,7 +36,7 @@ public class Version3CodeSmellExamples {
         try {
             Integer.parseInt(number);
         } catch (NumberFormatException exception) {
-            exception.printStackTrace();
+            LOGGER.log(Level.WARNING, "Invalid number", exception);
         }
     }
 

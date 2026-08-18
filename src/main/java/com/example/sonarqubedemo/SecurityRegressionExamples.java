@@ -13,11 +13,11 @@ public class SecurityRegressionExamples {
     private static final String INTERNAL_API = "http://192.168.0.10/admin";
 
     public Cipher createWeakCipher() throws GeneralSecurityException {
-        return Cipher.getInstance("DES/ECB/PKCS5Padding");
+        return Cipher.getInstance("AES/GCM/NoPadding");
     }
 
     public SSLContext createObsoleteSslContext() throws GeneralSecurityException {
-        return SSLContext.getInstance("SSL");
+        return SSLContext.getInstance("TLSv1.3");
     }
 
     public Process executeUserCommand(String userCommand) throws IOException {

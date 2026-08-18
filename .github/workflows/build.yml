@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     name: Build and analyze
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: Checkout source
@@ -41,7 +41,49 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
+          
+      - name: Check SonarQube connection
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        shell: bash
+        run: |
+          set -euo pipefail
 
+          if [ -z "${SONAR_HOST_URL:-}" ]; then
+            echo "SONAR_HOST_URL secret is missing"
+            exit 1
+          fi
+
+          if [ -z "${SONAR_TOKEN:-}" ]; then
+            echo "SONAR_TOKEN secret is missing"
+            exit 1
+          fi
+
+          echo "Checking SonarQube server status..."
+
+          curl \
+            --fail \
+            --silent \
+            --show-error \
+            --connect-timeout 10 \
+            --max-time 30 \
+            "${SONAR_HOST_URL}/api/system/status"
+
+          echo
+          echo "Checking SonarQube token..."
+
+          curl \
+            --fail \
+            --silent \
+            --show-error \
+            --connect-timeout 10 \
+            --max-time 30 \
+            -H "Authorization: Bearer ${SONAR_TOKEN}" \
+            "${SONAR_HOST_URL}/api/authentication/validate"
+
+          echo
+                 
       - name: Build and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -49,5 +91,6 @@ jobs:
         run: >
           mvn -B verify
           org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+          -Dsonar.verbose=true
           -Dsonar.projectKey=johs13_ito-agents-demo_eb9065d1-3609-4cb4-8943-c4acd7c15075
           -Dsonar.projectName=ito-agents-demo

@@ -46,7 +46,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         run: >
-          mvn -B verify
+          call "C:\devops\apache-maven-3.9.16\bin\mvn.cmd" -B -e verify
           org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.verbose=true
           -Dsonar.projectKey=johs13_ito-agents-demo_eb9065d1-3609-4cb4-8943-c4acd7c15075

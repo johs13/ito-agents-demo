@@ -42,4 +42,35 @@ public class Version4IssueExamples {
             task.run();
         }
     }
+
+    public boolean compareWithNaN(double value) {
+        return value == Double.NaN;
+    }
+
+    public String concatenateInsideLoop(List<String> values) {
+        String result = "";
+        for (String value : values) {
+            result += value;
+        }
+        return result;
+    }
+
+    public String arrayToStringIncorrectly(String[] values) {
+        return values.toString();
+    }
+
+    public void catchOverlyBroadError(Runnable task) {
+        try {
+            task.run();
+        } catch (Throwable error) {
+        }
+    }
+
+    public void requestGarbageCollection() {
+        System.gc();
+    }
+
+    public void terminateApplication() {
+        System.exit(1);
+    }
 }

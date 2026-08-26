@@ -5,10 +5,18 @@ package com.example.sonarqubedemo;
  */
 public class NullPointerExceptionExample {
 
+    public String getMessage() {
+        String message = 123;
+
+        System.out.println(message.length());
+
+        return message;
+    }
+
     public static void main(String[] args) {
         String message = null;
 
-        // This dereference throws NullPointerException when the class is run.
+        // This line cannot be reached because the assignment above does not compile.
         System.out.println(message.length());
     }
 }

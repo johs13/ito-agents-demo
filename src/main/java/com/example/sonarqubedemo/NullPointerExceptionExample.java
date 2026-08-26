@@ -16,7 +16,7 @@ public class NullPointerExceptionExample {
     public static void main(String[] args) {
         String message = null;
 
-        // This line cannot be reached because the assignment above does not compile.
+        // This dereference throws NullPointerException when the class is run.
         System.out.println(message.length());
     }
 }

@@ -6,7 +6,7 @@ package com.example.sonarqubedemo;
 public class NullPointerExceptionExample {
 
     public String getMessage() {
-        String message = 123;
+        String message = "123";
 
         System.out.println(message.length());
 

@@ -1,2 +1,9 @@
 /target/
 /.scannerwork/
+
+# Gradle 빌드 산출물 및 캐시
+/build/
+/.gradle/
+/.sonar/
+.idea/
+*.iml

@@ -1,0 +1,49 @@
+plugins {
+    id 'java'
+    // SonarQube 정적 분석용 플러그인 (Jenkinsfile의 sonarqube 스테이지에서 사용)
+    id 'org.sonarqube' version '5.1.0.4882'
+}
+
+group = 'com.example'
+version = '1.0.0-SNAPSHOT'
+
+java {
+    toolchain {
+        // pom.xml의 maven.compiler.release=21 과 동일
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // JUnit 5 테스트 의존성 (테스트 코드가 없으면 자동으로 통과)
+    testImplementation platform('org.junit:junit-bom:5.10.2')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events 'passed', 'skipped', 'failed'
+    }
+    // 테스트 리포트 경로: build/test-results/test/*.xml (Jenkins junit 스텝에서 사용)
+}
+
+jar {
+    archiveBaseName = 'sonarqube-issue-demo'
+}
+
+// sonar-project.properties 와 동일한 프로젝트 키로 SonarQube 서버에 보고
+sonarqube {
+    properties {
+        property 'sonar.projectKey', 'johs13_ito-agents-demo_eb9065d1-3609-4cb4-8943-c4acd7c15075'
+        property 'sonar.projectName', 'ito-agents-demo'
+        property 'sonar.sources', 'src/main'
+        property 'sonar.sourceEncoding', 'UTF-8'
+        property 'sonar.java.source', '21'
+    }
+}

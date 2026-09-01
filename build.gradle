@@ -1,7 +1,9 @@
 plugins {
     id 'java'
-    // SonarQube 정적 분석용 플러그인 (Jenkinsfile의 sonarqube 스테이지에서 사용)
-    id 'org.sonarqube' version '5.1.0.4882'
+    // SonarQube 정적 분석용 플러그인
+    // 주의: 6.x 미만(예: 5.1.0)은 Gradle 9.x 에서 제거된 Convention API 를 사용하여
+    //       'DslObject.getConvention()' NoSuchMethodError 발생 → Gradle 9 호환 버전 사용
+    id 'org.sonarqube' version '7.4.0.8496'
 }
 
 group = 'com.example'
@@ -38,7 +40,8 @@ jar {
 }
 
 // sonar-project.properties 와 동일한 프로젝트 키로 SonarQube 서버에 보고
-sonarqube {
+// 주의: 플러그인 6.x 부터 확장 이름이 sonarqube → sonar 로 변경됨
+sonar {
     properties {
         property 'sonar.projectKey', 'johs13_ito-agents-demo_eb9065d1-3609-4cb4-8943-c4acd7c15075'
         property 'sonar.projectName', 'ito-agents-demo'

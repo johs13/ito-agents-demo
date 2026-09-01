@@ -51,10 +51,14 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         run: >
           call "C:\gradle-9.7.1\bin\gradle.bat" clean build sonar
+          --stacktrace
+          --info
+          --warning-mode all
+          --no-daemon
           -Dsonar.verbose=true
           -Dsonar.projectKey=johs13_ito-agents-demo_eb9065d1-3609-4cb4-8943-c4acd7c15075
           -Dsonar.projectName=ito-agents-demo
-          --no-daemon
+          
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4

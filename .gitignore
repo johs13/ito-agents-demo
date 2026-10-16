@@ -7,3 +7,10 @@
 /.sonar/
 .idea/
 *.iml
+
+.aaf-deploy/
+.clinerules
+.github
+.inspect
+.report
+aaf_outputs

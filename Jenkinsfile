@@ -2,10 +2,9 @@
 // Jenkins Pipeline - Gradle 빌드 스크립트
 // =============================================================================
 // 사용 전 체크리스트:
-//   1. Windows 에이전트는 로컬 설치 Gradle(C:\gradle-9.7.1)을 절대 경로로 호출합니다.
-//      - PATH 에 등록되어 있어도 Jenkins 서비스/에이전트가 PATH 변경 전에 시작되어
-//        'gradle' 명령을 인식하지 못하는 문제를 회피합니다.
-//      - Gradle Wrapper(gradlew)를 커밋한 후에는 "gradlew.bat" 으로 교체 가능합니다.
+//   1. 저장소에 포함된 Gradle Wrapper를 사용하므로 Gradle을 별도로 설치할 필요가 없습니다.
+//      - gradlew, gradlew.bat, gradle/wrapper 파일들이 저장소에 커밋되어 있어야 합니다.
+//      - Gradle 버전은 gradle/wrapper/gradle-wrapper.properties 설정을 따릅니다.
 //   2. SonarQube 스테이지: Jenkins 관리 > System > SonarQube servers 에
 //      'sonarqube' 라는 이름으로 서버가 등록되어 있어야 합니다. (Name 은 변경 가능)
 //      SonarQube 를 사용하지 않으면 'SonarQube Analysis', 'Quality Gate' 스테이지를 삭제하세요.
@@ -14,9 +13,10 @@
 // 크로스 플랫폼(Linux/Windows 에이전트 모두) 지원용 Gradle 실행 헬퍼
 def gradleBuild(String args) {
     if (isUnix()) {
-        sh "gradle ${args}"
+        // 실행 권한이 없는 체크아웃에서도 Wrapper를 실행할 수 있도록 sh로 호출
+        sh "sh ./gradlew ${args}"
     } else {
-        bat "\"C:\\gradle-9.7.1\\bin\\gradle.bat\" ${args}"
+        bat ".\\gradlew.bat ${args}"
     }
 }
 

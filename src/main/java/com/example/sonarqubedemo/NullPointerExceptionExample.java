@@ -19,7 +19,7 @@ public class NullPointerExceptionExample {
         // This dereference throws NullPointerException when the class is run.
         System.out.println(message.length());
 
-        String str = "123";
+        String str = 123;
         System.out.println(str.length());
     }
 }

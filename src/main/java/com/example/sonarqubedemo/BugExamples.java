@@ -20,7 +20,28 @@ public class BugExamples {
         return infiniteRecursion(value + 1);
     }
 
-    public String ignoredReturnValue(String userName) {
+      public String ignoredReturnValue(String userName) {
         return userName.trim();
+    }
+
+    // ---- Compile-time error examples (javac build fails) ----
+
+    public void missingSemicolon() {
+        String text = "missing semicolon"
+        System.out.println(text);
+    }
+
+    public int undefinedVariable() {
+        return undefinedValue + 1;
+    }
+
+    public int typeMismatch() {
+        return "not an int";
+    }
+
+    public int missingReturn(int value) {
+        if (value > 0) {
+            return value;
+        }
     }
 }
